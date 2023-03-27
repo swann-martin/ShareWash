@@ -1,32 +1,32 @@
 import {
   Image,
   Pressable,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
   Alert,
   TextInput,
-  ScrollView
-} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import * as Location from 'expo-location';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import ServicesComponent from '../components/ServicesComponent';
-import DressItem from '../components/DressItemComponent';
-import DressItemComponent from '../components/DressItemComponent';
+  ScrollView,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import * as Location from "expo-location";
 
-const logo = require('../assets/logos/logoWashWhite.png');
-const user = { image: 'https://randomuser.me/api/portraits/women/60.jpg' };
+import { Feather } from "@expo/vector-icons";
+import ServicesComponent from "../components/ServicesComponent";
+import DressItemComponent from "../components/DressItemComponent";
+import { clothesState, useLaundry } from "../store/store";
+import HeaderComponent from "../components/HeaderComponent";
+
+const logo = require("../assets/logos/logoWashWhite.png");
+
 const HomeScreen = () => {
   const [displayCurrentAdress, setDisplayCurrentAdress] = useState<string>(
-    'No location loaded yet'
+    "No location loaded yet"
   );
   const [locationServicesEnabled, setLocationServicesEnabled] = useState<
     string | boolean
-  >('Location services are not enabled');
+  >("Location services are not enabled");
 
   useEffect(() => {
     checkIfLocationIsEnabled();
@@ -38,15 +38,15 @@ const HomeScreen = () => {
     if (!enabled) {
       const createTwoButtonAlert = () =>
         Alert.alert(
-          'Location services are not enabled',
-          'Please enable the location services',
+          "Location services are not enabled",
+          "Please enable the location services",
           [
             {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel'
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
             },
-            { text: 'OK', onPress: () => console.log('OK Pressed') }
+            { text: "OK", onPress: () => console.log("OK Pressed") },
           ]
         );
     } else {
@@ -58,15 +58,15 @@ const HomeScreen = () => {
     let status = await Location.requestForegroundPermissionsAsync();
     if (status.granted === false) {
       Alert.alert(
-        'Permission not granted',
-        'Please allow the app to use the location services',
+        "Permission not granted",
+        "Please allow the app to use the location services",
         [
           {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
           },
-          { text: 'OK', onPress: () => console.log('OK Pressed') }
+          { text: "OK", onPress: () => console.log("OK Pressed") },
         ]
       );
     }
@@ -75,7 +75,7 @@ const HomeScreen = () => {
       const { latitude, longitude } = coords;
       let response = await Location.reverseGeocodeAsync({
         latitude,
-        longitude
+        longitude,
       });
 
       for (let item of response) {
@@ -88,35 +88,13 @@ const HomeScreen = () => {
   return (
     <ScrollView style={{ padding: 10 }}>
       <StatusBar style="auto" />
-      <View
-        style={{
-          marginTop: 20,
-          flexDirection: 'row',
-          alignItems: 'center'
-        }}
-      >
-        <MaterialIcons name="location-on" size={30} color="white" />
-        <View>
-          <Text style={{ color: 'white', fontSize: 18, fontWeight: '600' }}>
-            Home
-          </Text>
-          <Text style={styles.text}>{displayCurrentAdress}</Text>
-        </View>
 
-        <Pressable
-          onPress={() => console.log('pressed')}
-          style={{ marginLeft: 'auto' }}
-        >
-          <Image
-            source={{ uri: user.image }}
-            style={{ width: 50, height: 50, borderRadius: 25 }}
-          />
-        </Pressable>
-      </View>
+      {/* Header  */}
+      <HeaderComponent displayCurrentAdress={displayCurrentAdress} />
 
       {/* logo  */}
       <Pressable
-        onPress={() => console.log('pressed')}
+        onPress={() => console.log("pressed")}
         style={styles.imageContainer}
       >
         <Image source={logo} style={styles.image} />
@@ -129,12 +107,12 @@ const HomeScreen = () => {
         style={{
           padding: 10,
           margin: 10,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
           borderWidth: 0.8,
-          borderColor: '#C4C4C4',
-          borderRadius: 8
+          borderColor: "#C4C4C4",
+          borderRadius: 8,
         }}
       >
         <TextInput
@@ -158,29 +136,29 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#55AFC0'
+    backgroundColor: "#55AFC0",
   },
   text: {
     fontSize: 10,
-    color: 'white',
-    fontWeight: 'bold',
-    fontFamily: 'sans-serif-medium'
+    color: "white",
+    fontWeight: "bold",
+    fontFamily: "sans-serif-medium",
   },
   imageContainer: {
     padding: 20,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     width: 100,
     height: 100,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   imageText: {
     fontSize: 20,
-    color: 'white',
-    fontWeight: 'bold',
-    fontFamily: 'sans-serif-medium'
-  }
+    color: "white",
+    fontWeight: "bold",
+    fontFamily: "sans-serif-medium",
+  },
 });
