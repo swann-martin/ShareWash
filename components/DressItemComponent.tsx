@@ -88,39 +88,80 @@ const DressItemComponent = () => {
             <Text style={{ color: "#246E89" }}>{item.title}</Text>
             <Text style={{ color: "#246E89" }}>{item.price} €</Text>
           </View>
-          <Pressable
-            onPress={() => removeFromCart(item)}
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              borderColor: "#246E89",
-              borderStyle: "solid",
-              borderWidth: 1,
-              padding: 5,
-              borderRadius: 50,
-              backgroundColor: "#BAE7E0",
-            }}
-          >
-            <MaterialIcons name="remove" size={24} color="#246E89" />
-          </Pressable>
-          <Text>{numberOfItemInCart(item.id)}</Text>
-          <Pressable
-            onPress={() => addToCart(item)}
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              borderColor: "#246E89",
-              borderStyle: "solid",
-              borderWidth: 1,
-              padding: 5,
-              borderRadius: 50,
-              backgroundColor: "#BAE7E0",
-            }}
-          >
-            <MaterialIcons name="add" size={24} color="#246E89" />
-          </Pressable>
+
+          {cart.some((c) => c.id === item.id) ? (
+            <View
+              style={{ flexDirection: "row", width: 100, alignItems: "center" }}
+            >
+              <Pressable
+                onPress={() => removeFromCart(item)}
+                style={{
+                  width: 26,
+                  height: 26,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderColor: "#246E89",
+                  borderStyle: "solid",
+                  borderWidth: 1,
+                  padding: 5,
+                  borderRadius: 50,
+                  backgroundColor: "#BAE7E0",
+                }}
+              >
+                <MaterialIcons name="remove" size={16} color="#246E89" />
+              </Pressable>
+              <Text
+                style={{
+                  color: "#246E89",
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginHorizontal: 10,
+                }}
+              >
+                {numberOfItemInCart(item.id)}
+              </Text>
+              <Pressable
+                onPress={() => addToCart(item)}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderColor: "#246E89",
+                  borderStyle: "solid",
+                  width: 26,
+                  height: 26,
+                  borderWidth: 1,
+                  padding: 5,
+                  borderRadius: 50,
+                  backgroundColor: "#BAE7E0",
+                }}
+              >
+                <MaterialIcons name="add" size={16} color="#246E89" />
+              </Pressable>
+            </View>
+          ) : (
+            <Pressable
+              onPress={() => addToCart(item)}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                borderColor: "#246E89",
+                borderStyle: "solid",
+                borderWidth: 1,
+                borderRadius: 10,
+                padding: 5,
+                width: 100,
+              }}
+            >
+              <Text
+                style={{ color: "#246E89", fontSize: 20, fontWeight: "bold" }}
+              >
+                Add
+              </Text>
+            </Pressable>
+          )}
         </Pressable>
       ))}
     </View>
