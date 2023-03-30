@@ -1,24 +1,93 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Pressable,
-  SafeAreaView
-} from 'react-native';
+import { StyleSheet, Image, Alert } from 'react-native';
+import * as Location from 'expo-location';
+import { NavigationContainer } from '@react-navigation/native';
 
-import HomeScreen from './screens/HomeScreen';
+import { useEffect, useState } from 'react';
 
+import { useUser } from './store/store';
+import DrawerComponent from './components/DrawerComponent';
 export default function App() {
+  const user = useUser((state) => state.user);
+  const setUser = useUser((state) => state.setUser);
+
+  const [displayCurrentAdress, setDisplayCurrentAdress] = useState<string>(
+    'No location loaded yet'
+  );
+  const [locationServicesEnabled, setLocationServicesEnabled] = useState<
+    string | boolean
+  >('Location services are not enabled');
+
+  useEffect(() => {
+    checkIfLocationIsEnabled();
+    getCurrentLocation();
+  }, []);
+
+  const checkIfLocationIsEnabled = async () => {
+    let enabled = await Location.hasServicesEnabledAsync();
+    if (!enabled) {
+      const createTwoButtonAlert = () =>
+        Alert.alert(
+          'Location services are not enabled',
+          'Please enable the location services',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel'
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') }
+          ]
+        );
+    } else {
+      setLocationServicesEnabled(enabled);
+    }
+  };
+
+  const getCurrentLocation = async () => {
+    let status = await Location.requestForegroundPermissionsAsync();
+    if (status.granted === false) {
+      Alert.alert(
+        'Permission not granted',
+        'Please allow the app to use the location services',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          },
+          { text: 'OK', onPress: () => console.log('OK Pressed') }
+        ]
+      );
+    }
+    const { coords } = await Location.getCurrentPositionAsync();
+    if (coords) {
+      const { latitude, longitude } = coords;
+      let response = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude
+      });
+
+      for (let item of response) {
+        let address = `${item.name} ${item.postalCode} ${item.city}`;
+        setDisplayCurrentAdress(address);
+        // setUser({
+        //   ...user,
+        //   location: address
+        // });
+      }
+    }
+  };
+
   const onPressFunction = () => {
     console.log('Pressed');
   };
 
   return (
-    <View style={styles.container}>
-      <HomeScreen />
-    </View>
+    <NavigationContainer>
+      <DrawerComponent />
+    </NavigationContainer>
   );
 }
 
