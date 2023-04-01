@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export interface LaundryState {
   cart: clothesState[] | [];
@@ -16,6 +16,18 @@ export interface clothesState {
   count: number;
 }
 
+export interface UserState {
+  user: User | null;
+  setUser: (user: User) => void;
+}
+
+export interface User {
+  name: string;
+  image: string;
+  email: string;
+  location?: string;
+}
+
 export const useLaundry = create<LaundryState>((set) => ({
   cart: [],
   addToCart: (item: clothesState) =>
@@ -28,7 +40,7 @@ export const useLaundry = create<LaundryState>((set) => ({
         return {
           ...state,
           cart: [...state.cart, { ...item, count: 1 }],
-          totalClothes: state.totalClothes + 1,
+          totalClothes: state.totalClothes + 1
         };
       }
 
@@ -41,7 +53,7 @@ export const useLaundry = create<LaundryState>((set) => ({
       return {
         ...state,
         cart: updatedCart,
-        totalClothes: state.totalClothes + 1,
+        totalClothes: state.totalClothes + 1
       };
     }),
   removeFromCart: (item: clothesState) =>
@@ -52,7 +64,7 @@ export const useLaundry = create<LaundryState>((set) => ({
 
       if (isPresent === -1) {
         return {
-          ...state,
+          ...state
         };
       }
 
@@ -67,9 +79,14 @@ export const useLaundry = create<LaundryState>((set) => ({
       return {
         ...state,
         cart: updatedCart,
-        totalClothes: Math.max(state.totalClothes - 1, 0),
+        totalClothes: Math.max(state.totalClothes - 1, 0)
       };
     }),
 
-  totalClothes: 0,
+  totalClothes: 0
+}));
+
+export const useUser = create<UserState>((set) => ({
+  user: null,
+  setUser: (user: User) => set({ user })
 }));
