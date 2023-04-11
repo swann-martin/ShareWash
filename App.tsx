@@ -9,12 +9,10 @@ import { useEffect, useState } from 'react';
 import { useUser } from './store/store';
 import DrawerComponent from './components/DrawerComponent';
 export default function App() {
-  const user = useUser((state) => state.user);
-  const setUser = useUser((state) => state.setUser);
-
-  const [displayCurrentAdress, setDisplayCurrentAdress] = useState<string>(
-    'No location loaded yet'
+  const setDisplayCurrentAdress = useUser(
+    (state) => state.setDisplayCurrentAdress
   );
+
   const [locationServicesEnabled, setLocationServicesEnabled] = useState<
     string | boolean
   >('Location services are not enabled');
@@ -72,10 +70,6 @@ export default function App() {
       for (let item of response) {
         let address = `${item.name} ${item.postalCode} ${item.city}`;
         setDisplayCurrentAdress(address);
-        // setUser({
-        //   ...user,
-        //   location: address
-        // });
       }
     }
   };

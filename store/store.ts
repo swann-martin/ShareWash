@@ -1,3 +1,4 @@
+import { User } from 'firebase/auth';
 import { create } from 'zustand';
 
 export interface LaundryState {
@@ -19,13 +20,8 @@ export interface clothesState {
 export interface UserState {
   user: User | null;
   setUser: (user: User) => void;
-}
-
-export interface User {
-  name: string;
-  image: string;
-  email: string;
-  location?: string;
+  displayCurrentAdress: string | null;
+  setDisplayCurrentAdress: (displayCurrentAdress: string | null) => void;
 }
 
 export const useLaundry = create<LaundryState>((set) => ({
@@ -88,5 +84,8 @@ export const useLaundry = create<LaundryState>((set) => ({
 
 export const useUser = create<UserState>((set) => ({
   user: null,
-  setUser: (user: User) => set({ user })
+  setUser: (user: User) => set({ user }),
+  displayCurrentAdress: 'no location at the moment',
+  setDisplayCurrentAdress: (displayCurrentAdress: string | null) =>
+    set({ displayCurrentAdress })
 }));
