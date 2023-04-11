@@ -8,6 +8,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { useUser } from '../store/store';
 import { useEffect } from 'react';
+import { auth } from '../firebase';
+import { colors } from '../config/constant';
 
 function CustomDrawerComponent(props) {
   const user = useUser((state) => state.user);
@@ -82,6 +84,17 @@ function CustomDrawerComponent(props) {
         label="Notifications"
         inactiveTintColor="white"
         onPress={() => {}}
+      />
+      <DrawerItem
+        label="Disconnect"
+        inactiveTintColor={colors.red}
+        labelStyle={{
+          fontWeight: 'bold'
+        }}
+        onPress={() => {
+          auth.signOut();
+          props.navigation.navigate('Login');
+        }}
       />
     </DrawerContentScrollView>
   );
