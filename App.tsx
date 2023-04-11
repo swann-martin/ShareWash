@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 import { useUser } from './store/store';
 import DrawerComponent from './components/DrawerComponent';
+import { colors } from './config/constant';
 export default function App() {
   const setDisplayCurrentAdress = useUser(
     (state) => state.setDisplayCurrentAdress

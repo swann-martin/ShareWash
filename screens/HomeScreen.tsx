@@ -17,10 +17,12 @@ import DressItemComponent from '../components/DressItemComponent';
 import { useUser } from '../store/store';
 import WashersNearByComponent from '../components/WashersNearByComponent';
 import { colors } from '../config/constant';
+import { useNavigation } from '@react-navigation/native';
 
 const logo = require('../assets/logos/logoWashWhite.png');
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ padding: 10 }}>
@@ -80,30 +82,24 @@ const HomeScreen = () => {
           {/* DressItem  */}
           <DressItemComponent />
           <Pressable
-            onPress={() => console.log('pressed')}
-            style={(pressed) =>
+            onPress={() => navigation.navigate('Order' as never)}
+            style={(pressed) => [
+              {
+                marginTop: 10,
+                backgroundColor: colors.action,
+                marginBottom: 80,
+                height: 50,
+                borderRadius: 8,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center'
+              },
               pressed
                 ? {
-                    marginTop: 10,
-                    backgroundColor: colors.red,
-                    marginBottom: 80,
-                    height: 50,
-                    borderRadius: 8,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center'
+                    backgroundColor: colors.accent
                   }
-                : {
-                    marginTop: 10,
-                    backgroundColor: colors.action,
-                    marginBottom: 80,
-                    height: 50,
-                    borderRadius: 8,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }
-            }
+                : {}
+            ]}
           >
             <Text
               style={{ color: colors.white, fontSize: 18, fontWeight: 'bold' }}

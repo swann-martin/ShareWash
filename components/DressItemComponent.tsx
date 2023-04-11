@@ -96,19 +96,7 @@ const DressItemComponent = () => {
             >
               <Pressable
                 onPress={() => removeFromCart(item)}
-                style={{
-                  width: 26,
-                  height: 26,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderColor: colors.action,
-                  borderStyle: 'solid',
-                  borderWidth: 1,
-                  padding: 5,
-                  borderRadius: 50,
-                  backgroundColor: colors.cards
-                }}
+                style={styles.buttonRound}
               >
                 <MaterialIcons name="remove" size={16} color="#246E89" />
               </Pressable>
@@ -124,38 +112,13 @@ const DressItemComponent = () => {
               </Text>
               <Pressable
                 onPress={() => addToCart(item)}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderColor: colors.action,
-                  borderStyle: 'solid',
-                  width: 26,
-                  height: 26,
-                  borderWidth: 1,
-                  padding: 5,
-                  borderRadius: 50,
-                  backgroundColor: colors.cards
-                }}
+                style={styles.buttonRound}
               >
                 <MaterialIcons name="add" size={16} color="#246E89" />
               </Pressable>
             </View>
           ) : (
-            <Pressable
-              onPress={() => addToCart(item)}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderColor: colors.action,
-                borderStyle: 'solid',
-                borderWidth: 1,
-                borderRadius: 10,
-                padding: 5,
-                width: 100
-              }}
-            >
+            <Pressable onPress={() => addToCart(item)} style={styles.buttonAdd}>
               <Text
                 style={{
                   color: colors.action,
@@ -175,4 +138,29 @@ const DressItemComponent = () => {
 
 export default DressItemComponent;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonRound: {
+    width: 26,
+    height: 26,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: colors.action,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 50,
+    backgroundColor: colors.cards
+  },
+  buttonAdd: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: colors.action,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 5,
+    width: 100
+  }
+});

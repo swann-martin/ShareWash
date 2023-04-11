@@ -8,6 +8,7 @@ import CustomDrawerComponent from './CustomDrawerComponent';
 import { RouteProp } from '@react-navigation/native';
 import { Image } from 'react-native';
 import { colors } from '../config/constant';
+import OrderScreen from '../screens/OrderScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -64,6 +65,17 @@ const DrawerComponent = () => {
       <Drawer.Screen
         name="Login"
         component={LoginScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: colors.bg,
+            height: 80
+          },
+          headerTintColor: colors.white
+        }}
+      />
+      <Drawer.Screen
+        name="Order"
+        component={OrderScreen}
         options={{
           headerStyle: {
             backgroundColor: colors.bg,
