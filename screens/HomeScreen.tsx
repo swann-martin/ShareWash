@@ -15,21 +15,12 @@ import { Feather } from '@expo/vector-icons';
 import ServicesComponent from '../components/ServicesComponent';
 import DressItemComponent from '../components/DressItemComponent';
 import { useUser } from '../store/store';
+import WashersNearByComponent from '../components/WashersNearByComponent';
+import { colors } from '../config/constant';
 
 const logo = require('../assets/logos/logoWashWhite.png');
 
 const HomeScreen = () => {
-  const setUser = useUser((state) => state.setUser);
-  const user = useUser((state) => state.user);
-  // useEffect(() => {
-  //   setUser({
-  //     ...user,
-  //     name: 'Joan Doe',
-  //     email: 'useremail@example.com',
-  //     image: 'https://randomuser.me/api/portraits/women/60.jpg'
-  //   });
-  // }, [user]);
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ padding: 10 }}>
@@ -65,12 +56,62 @@ const HomeScreen = () => {
           <Feather name="search" size={24} color="#C4C4C4" />
         </View>
 
-        {/* Services  */}
+        {/* Quick Order */}
+        <View style={{ marginTop: 20 }}>
+          <Text
+            style={{
+              color: colors.white,
+              fontSize: 18,
+              fontWeight: 'bold',
 
-        <ServicesComponent />
+              marginBottom: 10
+            }}
+          >
+            Quick Order
+          </Text>
+          {/* Washers Nearby  */}
 
-        {/* DressItem  */}
-        <DressItemComponent />
+          <WashersNearByComponent />
+
+          {/* Services  */}
+
+          <ServicesComponent />
+
+          {/* DressItem  */}
+          <DressItemComponent />
+          <Pressable
+            onPress={() => console.log('pressed')}
+            style={(pressed) =>
+              pressed
+                ? {
+                    marginTop: 10,
+                    backgroundColor: colors.red,
+                    marginBottom: 80,
+                    height: 50,
+                    borderRadius: 8,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }
+                : {
+                    marginTop: 10,
+                    backgroundColor: colors.action,
+                    marginBottom: 80,
+                    height: 50,
+                    borderRadius: 8,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }
+            }
+          >
+            <Text
+              style={{ color: colors.white, fontSize: 18, fontWeight: 'bold' }}
+            >
+              Quick Order
+            </Text>
+          </Pressable>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

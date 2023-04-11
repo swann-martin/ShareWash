@@ -9,20 +9,11 @@ import { RouteProp } from '@react-navigation/native';
 import { Image } from 'react-native';
 const Drawer = createDrawerNavigator();
 
-// export type RootStackParamList = {
-//   Home: undefined;
-//   About: undefined;
-//   Login: undefined;
-//   Register: undefined;
-//   NotFound: undefined;
-//   Splash: undefined;
-// };
-
 const DrawerComponent = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerComponent {...props} />}
-      initialRouteName="Home"
+      initialRouteName="Login"
       screenOptions={{
         drawerStyle: {
           backgroundColor: '#55AFC0'

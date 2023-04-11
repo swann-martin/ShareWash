@@ -1,56 +1,56 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { clothesState, useLaundry } from "../store/store";
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { clothesState, useLaundry } from '../store/store';
 
 const DressItemList: clothesState[] = [
   {
-    title: "Dress",
-    image: "https://cdn-icons-png.flaticon.com/512/9883/9883565.png",
-    alt: "dress flaticon ",
+    title: 'Dress',
+    image: 'https://cdn-icons-png.flaticon.com/512/9883/9883565.png',
+    alt: 'dress flaticon ',
     id: 1,
     price: 1,
-    count: 0,
+    count: 0
   },
   {
-    title: "Jacket",
-    image: "https://cdn-icons-png.flaticon.com/512/10127/10127426.png",
-    alt: "jacket flaticon ",
+    title: 'Jacket',
+    image: 'https://cdn-icons-png.flaticon.com/512/10127/10127426.png',
+    alt: 'jacket flaticon ',
     id: 2,
     price: 15,
-    count: 0,
+    count: 0
   },
   {
-    title: "T-shirt",
-    image: "https://cdn-icons-png.flaticon.com/512/9986/9986000.png",
-    alt: "tshirt flaticon ",
+    title: 'T-shirt',
+    image: 'https://cdn-icons-png.flaticon.com/512/9986/9986000.png',
+    alt: 'tshirt flaticon ',
     id: 3,
     price: 1,
-    count: 0,
+    count: 0
   },
   {
-    title: "Socks",
-    image: "https://cdn-icons-png.flaticon.com/512/9584/9584216.png",
-    alt: "socks flaticon ",
+    title: 'Socks',
+    image: 'https://cdn-icons-png.flaticon.com/512/9584/9584216.png',
+    alt: 'socks flaticon ',
     id: 4,
     price: 0.5,
-    count: 0,
+    count: 0
   },
   {
-    title: "Shirt",
-    image: "https://cdn-icons-png.flaticon.com/512/2957/2957379.png",
-    alt: "shirt flaticon ",
+    title: 'Shirt',
+    image: 'https://cdn-icons-png.flaticon.com/512/2957/2957379.png',
+    alt: 'shirt flaticon ',
     id: 5,
     price: 1,
-    count: 0,
+    count: 0
   },
   {
-    title: "Trousers",
-    image: "https://cdn-icons-png.flaticon.com/512/599/599580.png",
-    alt: "trousers flaticon ",
+    title: 'Trousers',
+    image: 'https://cdn-icons-png.flaticon.com/512/599/599580.png',
+    alt: 'trousers flaticon ',
     id: 6,
     price: 1,
-    count: 0,
-  },
+    count: 0
+  }
 ];
 
 const DressItemComponent = () => {
@@ -58,7 +58,7 @@ const DressItemComponent = () => {
   const cart = useLaundry((state) => state.cart);
   const removeFromCart = useLaundry((state) => state.removeFromCart);
   const numberOfItemInCart = (id: number) => {
-    return cart.filter((cartItem) => cartItem.id === id)[0]?.count;
+    return cart.filter((cartItem) => cartItem?.id === id)[0]?.count;
   };
 
   return (
@@ -68,14 +68,14 @@ const DressItemComponent = () => {
           key={`DessItem-${item.title}-${item.id}`}
           style={({ pressed }) => [
             {
-              backgroundColor: pressed ? "rgb(210, 230, 255)" : "white",
+              backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
               margin: 10,
               padding: 10,
               borderRadius: 10,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            },
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }
           ]}
         >
           <Image
@@ -85,38 +85,38 @@ const DressItemComponent = () => {
           />
 
           <View>
-            <Text style={{ color: "#246E89" }}>{item.title}</Text>
-            <Text style={{ color: "#246E89" }}>{item.price} €</Text>
+            <Text style={{ color: '#246E89' }}>{item.title}</Text>
+            <Text style={{ color: '#246E89' }}>{item.price} €</Text>
           </View>
 
           {cart.some((c) => c.id === item.id) ? (
             <View
-              style={{ flexDirection: "row", width: 100, alignItems: "center" }}
+              style={{ flexDirection: 'row', width: 100, alignItems: 'center' }}
             >
               <Pressable
                 onPress={() => removeFromCart(item)}
                 style={{
                   width: 26,
                   height: 26,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderColor: "#246E89",
-                  borderStyle: "solid",
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderColor: '#246E89',
+                  borderStyle: 'solid',
                   borderWidth: 1,
                   padding: 5,
                   borderRadius: 50,
-                  backgroundColor: "#BAE7E0",
+                  backgroundColor: '#BAE7E0'
                 }}
               >
                 <MaterialIcons name="remove" size={16} color="#246E89" />
               </Pressable>
               <Text
                 style={{
-                  color: "#246E89",
+                  color: '#246E89',
                   fontSize: 24,
-                  fontWeight: "bold",
-                  marginHorizontal: 10,
+                  fontWeight: 'bold',
+                  marginHorizontal: 10
                 }}
               >
                 {numberOfItemInCart(item.id)}
@@ -124,17 +124,17 @@ const DressItemComponent = () => {
               <Pressable
                 onPress={() => addToCart(item)}
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderColor: "#246E89",
-                  borderStyle: "solid",
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderColor: '#246E89',
+                  borderStyle: 'solid',
                   width: 26,
                   height: 26,
                   borderWidth: 1,
                   padding: 5,
                   borderRadius: 50,
-                  backgroundColor: "#BAE7E0",
+                  backgroundColor: '#BAE7E0'
                 }}
               >
                 <MaterialIcons name="add" size={16} color="#246E89" />
@@ -144,19 +144,19 @@ const DressItemComponent = () => {
             <Pressable
               onPress={() => addToCart(item)}
               style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                borderColor: "#246E89",
-                borderStyle: "solid",
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderColor: '#246E89',
+                borderStyle: 'solid',
                 borderWidth: 1,
                 borderRadius: 10,
                 padding: 5,
-                width: 100,
+                width: 100
               }}
             >
               <Text
-                style={{ color: "#246E89", fontSize: 20, fontWeight: "bold" }}
+                style={{ color: '#246E89', fontSize: 20, fontWeight: 'bold' }}
               >
                 Add
               </Text>
