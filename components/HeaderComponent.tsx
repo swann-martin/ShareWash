@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useLaundry } from '../store/store';
+import { colors } from '../config/constant';
 
 const HeaderComponent = ({ title = '' }: { title?: string }) => {
   const totalClothes = useLaundry((state) => state.totalClothes);
@@ -39,7 +40,7 @@ export default HeaderComponent;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#55AFC0'
+    backgroundColor: colors.bg
   },
   text: {
     fontSize: 10,

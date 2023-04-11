@@ -5,10 +5,19 @@ import {
 } from '@react-navigation/drawer';
 import { Pressable, Image, Text, View, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+
 import { useUser } from '../store/store';
+import { useEffect } from 'react';
+import { auth } from '../firebase';
+import { colors } from '../config/constant';
 
 function CustomDrawerComponent(props) {
   const user = useUser((state) => state.user);
+  const location = useUser((state) => state.displayCurrentAdress);
+
+  useEffect(() => {
+    console.log('user in custom drawer : ', user);
+  }, [user]);
   return (
     <DrawerContentScrollView {...props}>
       <Pressable
@@ -18,24 +27,56 @@ function CustomDrawerComponent(props) {
         <Image
           source={{
             uri:
-              user?.image ?? 'https://randomuser.me/api/portraits/women/67.jpg'
+              user?.photoURL ?? 'https://randomuser.me/api/portraits/lego/6.jpg'
           }}
-          style={{ width: 50, height: 50, borderRadius: 25 }}
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 50,
+            marginLeft: 'auto',
+            marginRight: 'auto'
+          }}
         />
-        <Text style={{ color: 'white', fontWeight: 'bold', marginLeft: 10 }}>
-          {user?.name ? user.name : 'Joanna Falsename'}
+        <Text
+          style={{
+            color: 'white',
+            fontWeight: 'bold',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+          }}
+        >
+          {user?.displayName
+            ? user.displayName
+            : user?.email
+            ? user.email.split('@')[0]
+            : 'username'}
         </Text>
-        <Text style={{ color: 'white', fontWeight: 'bold', marginLeft: 10 }}>
-          {user?.email ? user.email : 'email@example.com'}
-        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start'
+          }}
+        >
+          <MaterialIcons name="email" size={24} color="white" />
+          <Text style={{ color: 'white', fontWeight: 'bold', marginLeft: 5 }}>
+            {user?.email ? user.email : 'email@example.com'}
+          </Text>
+        </View>
       </Pressable>
-      <View style={{ flexDirection: 'row', marginVertical: 10, marginLeft: 5 }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginVertical: 10,
+          marginLeft: 5
+        }}
+      >
         <MaterialIcons name="location-on" size={30} color="white" />
         <View>
-          <Text style={{ color: 'white', fontSize: 18, fontWeight: '600' }}>
-            Location :
+          <Text style={{ color: 'white', fontWeight: '600' }}>
+            {location ?? 'no location'}
           </Text>
-          <Text style={styles.text}>{user?.location ?? 'no location'}</Text>
         </View>
       </View>
       <DrawerItemList {...props} />
@@ -43,6 +84,17 @@ function CustomDrawerComponent(props) {
         label="Notifications"
         inactiveTintColor="white"
         onPress={() => {}}
+      />
+      <DrawerItem
+        label="Disconnect"
+        inactiveTintColor={colors.red}
+        labelStyle={{
+          fontWeight: 'bold'
+        }}
+        onPress={() => {
+          auth.signOut();
+          props.navigation.navigate('Login');
+        }}
       />
     </DrawerContentScrollView>
   );

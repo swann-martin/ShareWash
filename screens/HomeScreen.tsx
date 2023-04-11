@@ -15,21 +15,14 @@ import { Feather } from '@expo/vector-icons';
 import ServicesComponent from '../components/ServicesComponent';
 import DressItemComponent from '../components/DressItemComponent';
 import { useUser } from '../store/store';
+import WashersNearByComponent from '../components/WashersNearByComponent';
+import { colors } from '../config/constant';
+import { useNavigation } from '@react-navigation/native';
 
 const logo = require('../assets/logos/logoWashWhite.png');
 
 const HomeScreen = () => {
-  const setUser = useUser((state) => state.setUser);
-  const user = useUser((state) => state.user);
-  // useEffect(() => {
-  //   setUser({
-  //     ...user,
-  //     name: 'Joan Doe',
-  //     email: 'useremail@example.com',
-  //     image: 'https://randomuser.me/api/portraits/women/60.jpg'
-  //   });
-  // }, [user]);
-
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ padding: 10 }}>
@@ -65,12 +58,56 @@ const HomeScreen = () => {
           <Feather name="search" size={24} color="#C4C4C4" />
         </View>
 
-        {/* Services  */}
+        {/* Quick Order */}
+        <View style={{ marginTop: 20 }}>
+          <Text
+            style={{
+              color: colors.white,
+              fontSize: 18,
+              fontWeight: 'bold',
 
-        <ServicesComponent />
+              marginBottom: 10
+            }}
+          >
+            Quick Order
+          </Text>
+          {/* Washers Nearby  */}
 
-        {/* DressItem  */}
-        <DressItemComponent />
+          <WashersNearByComponent />
+
+          {/* Services  */}
+
+          <ServicesComponent />
+
+          {/* DressItem  */}
+          <DressItemComponent />
+          <Pressable
+            onPress={() => navigation.navigate('Order' as never)}
+            style={(pressed) => [
+              {
+                marginTop: 10,
+                backgroundColor: colors.action,
+                marginBottom: 80,
+                height: 50,
+                borderRadius: 8,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center'
+              },
+              pressed
+                ? {
+                    backgroundColor: colors.accent
+                  }
+                : {}
+            ]}
+          >
+            <Text
+              style={{ color: colors.white, fontSize: 18, fontWeight: 'bold' }}
+            >
+              Quick Order
+            </Text>
+          </Pressable>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -80,7 +117,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#55AFC0'
+    backgroundColor: colors.bg
   },
   text: {
     fontSize: 10,

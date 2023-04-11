@@ -7,25 +7,19 @@ import RegisterScreen from '../screens/RegisterScreen';
 import CustomDrawerComponent from './CustomDrawerComponent';
 import { RouteProp } from '@react-navigation/native';
 import { Image } from 'react-native';
-const Drawer = createDrawerNavigator();
+import { colors } from '../config/constant';
+import OrderScreen from '../screens/OrderScreen';
 
-// export type RootStackParamList = {
-//   Home: undefined;
-//   About: undefined;
-//   Login: undefined;
-//   Register: undefined;
-//   NotFound: undefined;
-//   Splash: undefined;
-// };
+const Drawer = createDrawerNavigator();
 
 const DrawerComponent = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerComponent {...props} />}
-      initialRouteName="Home"
+      initialRouteName="Login"
       screenOptions={{
         drawerStyle: {
-          backgroundColor: '#55AFC0'
+          backgroundColor: colors.bg
         },
         drawerLabelStyle: {
           color: 'white'
@@ -41,10 +35,10 @@ const DrawerComponent = () => {
           },
 
           headerStyle: {
-            backgroundColor: '#55AFC0',
+            backgroundColor: colors.bg,
             height: 80
           },
-          headerTintColor: '#fff',
+          headerTintColor: colors.white,
           drawerIcon: ({ color, size }) => (
             <Image
               source={require('../assets/logos/logoWashWhite.png')}
@@ -62,10 +56,10 @@ const DrawerComponent = () => {
         component={RegisterScreen}
         options={{
           headerStyle: {
-            backgroundColor: '#55AFC0',
+            backgroundColor: colors.bg,
             height: 80
           },
-          headerTintColor: '#fff'
+          headerTintColor: colors.white
         }}
       />
       <Drawer.Screen
@@ -73,10 +67,21 @@ const DrawerComponent = () => {
         component={LoginScreen}
         options={{
           headerStyle: {
-            backgroundColor: '#55AFC0',
+            backgroundColor: colors.bg,
             height: 80
           },
-          headerTintColor: '#fff'
+          headerTintColor: colors.white
+        }}
+      />
+      <Drawer.Screen
+        name="Order"
+        component={OrderScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: colors.bg,
+            height: 80
+          },
+          headerTintColor: colors.white
         }}
       />
       <Drawer.Screen name="About" component={AboutScreen} />

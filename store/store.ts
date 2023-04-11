@@ -1,3 +1,4 @@
+import { User } from 'firebase/auth';
 import { create } from 'zustand';
 
 export interface LaundryState {
@@ -5,6 +6,10 @@ export interface LaundryState {
   addToCart: (item: clothesState) => void;
   removeFromCart: (item: clothesState) => void;
   totalClothes: number;
+  washerSelected: washerSelectedState | null;
+  setWasherSelected: (washerSelected: washerSelectedState | null) => void;
+  servicesSelected: string[];
+  setServicesSelected: (service: string) => void;
 }
 
 export interface clothesState {
@@ -19,16 +24,24 @@ export interface clothesState {
 export interface UserState {
   user: User | null;
   setUser: (user: User) => void;
+  displayCurrentAdress: string | null;
+  setDisplayCurrentAdress: (displayCurrentAdress: string | null) => void;
 }
 
-export interface User {
-  name: string;
+export interface washerSelectedState {
+  id: string;
   image: string;
-  email: string;
-  location?: string;
+  alt: string;
+  title: string;
+  adress: string;
 }
 
 export const useLaundry = create<LaundryState>((set) => ({
+  washerSelected: null,
+  setWasherSelected: (washerSelected: washerSelectedState | null) =>
+    set({ washerSelected }),
+  servicesSelected: [],
+
   cart: [],
   addToCart: (item: clothesState) =>
     set((state) => {
@@ -83,10 +96,35 @@ export const useLaundry = create<LaundryState>((set) => ({
       };
     }),
 
-  totalClothes: 0
+  totalClothes: 0,
+
+  setServicesSelected: (service: string) =>
+    set((state) => {
+      const isPresent =
+        state.servicesSelected.length &&
+        state.servicesSelected?.includes(service);
+
+      if (!isPresent) {
+        return {
+          servicesSelected: [...state.servicesSelected, service]
+        };
+      }
+
+      const updatedServices = state.servicesSelected.filter(
+        (el: string) => el !== service
+      );
+
+      return {
+        ...state,
+        servicesSelected: updatedServices
+      };
+    })
 }));
 
 export const useUser = create<UserState>((set) => ({
   user: null,
-  setUser: (user: User) => set({ user })
+  setUser: (user: User) => set({ user }),
+  displayCurrentAdress: 'no location at the moment',
+  setDisplayCurrentAdress: (displayCurrentAdress: string | null) =>
+    set({ displayCurrentAdress })
 }));
