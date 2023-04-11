@@ -7,6 +7,7 @@ import {
   Image
 } from 'react-native';
 import React from 'react';
+import { colors } from '../config/constant';
 
 const ServicesComponent = () => {
   const services = [
@@ -43,7 +44,7 @@ const ServicesComponent = () => {
         {services.map((service) => (
           <Pressable
             style={{
-              backgroundColor: '#BAE7E0',
+              backgroundColor: colors.cards,
               padding: 10,
               borderRadius: 10,
               margin: 10,
@@ -58,7 +59,7 @@ const ServicesComponent = () => {
             />
             <Text
               style={{
-                color: '#246E89',
+                color: colors.action,
                 fontWeight: 'bold',
                 fontStyle: 'italic',
                 marginTop: 5

@@ -121,7 +121,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#55AFC0'
+    backgroundColor: colors.bg
   },
   text: {
     fontSize: 10,

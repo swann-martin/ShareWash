@@ -7,6 +7,7 @@ import {
   Image
 } from 'react-native';
 import React from 'react';
+import { colors } from '../config/constant';
 
 const WashersNearByComponent = () => {
   const washersNearby = [
@@ -46,7 +47,7 @@ const WashersNearByComponent = () => {
         {washersNearby.map((person) => (
           <Pressable
             style={{
-              backgroundColor: '#BAE7E0',
+              backgroundColor: colors.cards,
               padding: 10,
               borderRadius: 10,
               margin: 10,
@@ -66,7 +67,7 @@ const WashersNearByComponent = () => {
             />
             <Text
               style={{
-                color: '#246E89',
+                color: colors.action,
                 fontWeight: 'bold',
                 fontStyle: 'italic',
                 marginTop: 5
@@ -76,7 +77,7 @@ const WashersNearByComponent = () => {
             </Text>
             <Text
               style={{
-                color: '#246E89',
+                color: colors.action,
                 fontWeight: 'bold',
                 fontStyle: 'italic',
                 marginTop: 5
@@ -88,7 +89,7 @@ const WashersNearByComponent = () => {
         ))}
         <Pressable
           style={{
-            backgroundColor: '#BAE7E0',
+            backgroundColor: colors.cards,
             padding: 10,
             borderRadius: 10,
             margin: 10,
@@ -107,7 +108,7 @@ const WashersNearByComponent = () => {
           />
           <Text
             style={{
-              color: '#246E89',
+              color: colors.action,
               fontWeight: 'bold',
               fontStyle: 'italic',
               marginTop: 5
@@ -117,7 +118,7 @@ const WashersNearByComponent = () => {
           </Text>
           <Text
             style={{
-              color: '#246E89',
+              color: colors.action,
               fontWeight: 'bold',
               fontStyle: 'italic',
               marginTop: 5

@@ -88,7 +88,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#55AFC0'
+    backgroundColor: colors.bg
   },
   text: {
     marginTop: 10,

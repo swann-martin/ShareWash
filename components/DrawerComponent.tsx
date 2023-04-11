@@ -7,6 +7,8 @@ import RegisterScreen from '../screens/RegisterScreen';
 import CustomDrawerComponent from './CustomDrawerComponent';
 import { RouteProp } from '@react-navigation/native';
 import { Image } from 'react-native';
+import { colors } from '../config/constant';
+
 const Drawer = createDrawerNavigator();
 
 const DrawerComponent = () => {
@@ -16,7 +18,7 @@ const DrawerComponent = () => {
       initialRouteName="Login"
       screenOptions={{
         drawerStyle: {
-          backgroundColor: '#55AFC0'
+          backgroundColor: colors.bg
         },
         drawerLabelStyle: {
           color: 'white'
@@ -32,10 +34,10 @@ const DrawerComponent = () => {
           },
 
           headerStyle: {
-            backgroundColor: '#55AFC0',
+            backgroundColor: colors.bg,
             height: 80
           },
-          headerTintColor: '#fff',
+          headerTintColor: colors.white,
           drawerIcon: ({ color, size }) => (
             <Image
               source={require('../assets/logos/logoWashWhite.png')}
@@ -53,10 +55,10 @@ const DrawerComponent = () => {
         component={RegisterScreen}
         options={{
           headerStyle: {
-            backgroundColor: '#55AFC0',
+            backgroundColor: colors.bg,
             height: 80
           },
-          headerTintColor: '#fff'
+          headerTintColor: colors.white
         }}
       />
       <Drawer.Screen
@@ -64,10 +66,10 @@ const DrawerComponent = () => {
         component={LoginScreen}
         options={{
           headerStyle: {
-            backgroundColor: '#55AFC0',
+            backgroundColor: colors.bg,
             height: 80
           },
-          headerTintColor: '#fff'
+          headerTintColor: colors.white
         }}
       />
       <Drawer.Screen name="About" component={AboutScreen} />

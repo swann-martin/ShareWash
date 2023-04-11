@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { clothesState, useLaundry } from '../store/store';
+import { colors } from '../config/constant';
 
 const DressItemList: clothesState[] = [
   {
@@ -85,8 +86,8 @@ const DressItemComponent = () => {
           />
 
           <View>
-            <Text style={{ color: '#246E89' }}>{item.title}</Text>
-            <Text style={{ color: '#246E89' }}>{item.price} €</Text>
+            <Text style={{ color: colors.action }}>{item.title}</Text>
+            <Text style={{ color: colors.action }}>{item.price} €</Text>
           </View>
 
           {cart.some((c) => c.id === item.id) ? (
@@ -101,19 +102,19 @@ const DressItemComponent = () => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  borderColor: '#246E89',
+                  borderColor: colors.action,
                   borderStyle: 'solid',
                   borderWidth: 1,
                   padding: 5,
                   borderRadius: 50,
-                  backgroundColor: '#BAE7E0'
+                  backgroundColor: colors.cards
                 }}
               >
                 <MaterialIcons name="remove" size={16} color="#246E89" />
               </Pressable>
               <Text
                 style={{
-                  color: '#246E89',
+                  color: colors.action,
                   fontSize: 24,
                   fontWeight: 'bold',
                   marginHorizontal: 10
@@ -127,14 +128,14 @@ const DressItemComponent = () => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  borderColor: '#246E89',
+                  borderColor: colors.action,
                   borderStyle: 'solid',
                   width: 26,
                   height: 26,
                   borderWidth: 1,
                   padding: 5,
                   borderRadius: 50,
-                  backgroundColor: '#BAE7E0'
+                  backgroundColor: colors.cards
                 }}
               >
                 <MaterialIcons name="add" size={16} color="#246E89" />
@@ -147,7 +148,7 @@ const DressItemComponent = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
-                borderColor: '#246E89',
+                borderColor: colors.action,
                 borderStyle: 'solid',
                 borderWidth: 1,
                 borderRadius: 10,
@@ -156,7 +157,11 @@ const DressItemComponent = () => {
               }}
             >
               <Text
-                style={{ color: '#246E89', fontSize: 20, fontWeight: 'bold' }}
+                style={{
+                  color: colors.action,
+                  fontSize: 20,
+                  fontWeight: 'bold'
+                }}
               >
                 Add
               </Text>

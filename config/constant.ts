@@ -1,7 +1,7 @@
 export const colors = {
   action: '#246e89',
   main: '#388ea3',
-  cards: '#91d1d3',
+  cards: '#BAE7E0',
   bg: '#55afc0',
   accent: '#dcdcdc',
   hover: '#eee6d1',

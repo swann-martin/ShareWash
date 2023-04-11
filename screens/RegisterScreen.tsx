@@ -235,7 +235,7 @@ export default RegisterScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#55AFC0',
+    backgroundColor: colors.bg,
     alignItems: 'center'
   },
   imageText: {
