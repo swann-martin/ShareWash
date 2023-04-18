@@ -1,10 +1,17 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  Platform,
+  Button
+} from 'react-native';
+import React, { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { clothesState, useLaundry } from '../store/store';
 import { colors } from '../config/constant';
-import { color } from 'react-native-reanimated';
 
 const OrderScreen = () => {
   const navigation = useNavigation();
@@ -27,7 +34,53 @@ const OrderScreen = () => {
       );
   }, [cart]);
 
-  const now = new Date().toLocaleDateString('fr-FR');
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const afterTomorrow = new Date(tomorrow);
+  afterTomorrow.setDate(afterTomorrow.getDate() + 1);
+
+  const [date, setDate] = useState(today);
+  const [time, setTime] = useState('18h00');
+
+  const ButtonDate = ({ dateDisplayed }) => {
+    return (
+      <Pressable
+        onPress={() => {
+          setDate(dateDisplayed);
+          console.log(dateDisplayed);
+          console.log(date);
+        }}
+        style={[
+          styles.buttonTime,
+          date?.toLocaleDateString('fr-FR') ===
+          dateDisplayed.toLocaleDateString('fr-FR')
+            ? { backgroundColor: colors.action }
+            : {}
+        ]}
+      >
+        <Text style={styles.text}>
+          {dateDisplayed.toLocaleDateString('fr-FR')}
+        </Text>
+      </Pressable>
+    );
+  };
+
+  const ButtonTime = ({ timeDisplayed }) => {
+    return (
+      <Pressable
+        onPress={() => {
+          setTime(timeDisplayed);
+        }}
+        style={[
+          styles.buttonTime,
+          time === timeDisplayed ? { backgroundColor: colors.action } : {}
+        ]}
+      >
+        <Text style={styles.text}>{timeDisplayed}</Text>
+      </Pressable>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -37,7 +90,7 @@ const OrderScreen = () => {
           <Text style={styles.title}>Washer Selected:</Text>
           <View style={{ flexDirection: 'row' }}>
             <Image
-              source={{ uri: washerSelected.image }}
+              source={{ uri: washerSelected?.image }}
               style={styles.image}
             />
             <View style={{ paddingStart: 10 }}>
@@ -143,19 +196,36 @@ const OrderScreen = () => {
       <Text style={styles.title}>Total : {total} €</Text>
 
       <View>
-        <Text style={styles.title}>Select Pick up Date</Text>
-        <View>
-          <Text style={styles.text}>{now}</Text>
+        <Text style={styles.title}>Select Drop Date</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+          <ButtonDate dateDisplayed={today} />
+          <ButtonDate dateDisplayed={tomorrow} />
+          <ButtonDate dateDisplayed={afterTomorrow} />
         </View>
       </View>
-      <Text style={styles.title}>Select Pick up Time</Text>
+      <Text style={styles.title}>Select Drop Time</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+        <ButtonTime timeDisplayed={'18h00'} />
+        <ButtonTime timeDisplayed={'18h30'} />
+        <ButtonTime timeDisplayed={'19h00'} />
+        <ButtonTime timeDisplayed={'19h30'} />
+      </View>
 
       <Pressable
-        onPress={() => console.log('pressed')}
+        onPress={() => {
+          const order = {
+            washer: washerSelected,
+            services: servicesSelected,
+            clothes: cart,
+            date: date,
+            time: time,
+            total: total
+          };
+          console.log(order);
+        }}
         style={(pressed) => [
           {
-            marginTop: 10,
-            backgroundColor: colors.action,
+            marginTop: 40,
             marginBottom: 80,
             height: 50,
             borderRadius: 8,
@@ -165,9 +235,11 @@ const OrderScreen = () => {
           },
           pressed
             ? {
-                backgroundColor: colors.accent
+                backgroundColor: colors.action
               }
-            : {}
+            : {
+                backgroundColor: colors.red
+              }
         ]}
       >
         <Text style={{ color: colors.white, fontSize: 18, fontWeight: 'bold' }}>
@@ -220,5 +292,12 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 50,
     backgroundColor: colors.cards
+  },
+  buttonTime: {
+    borderRadius: 10,
+    borderColor: colors.white,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    padding: 10
   }
 });
