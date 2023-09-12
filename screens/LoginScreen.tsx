@@ -50,12 +50,11 @@ const LoginScreen = () => {
     }
     signInWithEmailAndPassword(auth, email.trim(), password).then(
       (userCredential: UserCredential) => {
-        console.log('userCredential : ', userCredential);
         const user = userCredential.user;
         setUser(user);
-        console.log('user details : ', user);
         const myUserUid = auth.currentUser.uid;
-        console.log('user details : ', user);
+        setEmail('');
+        setPassword('');
         navigation.navigate('Home' as never);
       }
     );
@@ -95,10 +94,11 @@ const LoginScreen = () => {
               color="white"
             />
             <TextInput
-              placeholder="Email"
+              placeholder="swann@swannmartin.xyz"
               value={email}
               onChangeText={(text) => setEmail(text)}
-              placeholderTextColor={'white'}
+              placeholderTextColor="#C4C4C4"
+              keyboardType="email-address"
               style={{
                 marginLeft: '2.5%',
                 color: 'white',
@@ -127,8 +127,8 @@ const LoginScreen = () => {
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={showPassword}
-              placeholder="Password min 8 characters"
-              placeholderTextColor={'white'}
+              placeholder="123456"
+              placeholderTextColor="#C4C4C4"
               style={{
                 marginLeft: '2.5%',
                 color: 'white',

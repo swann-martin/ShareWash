@@ -22,6 +22,8 @@ import { useNavigation } from '@react-navigation/native';
 const logo = require('../assets/logos/logoWashWhite.png');
 
 const HomeScreen = () => {
+  const setSearch = useUser((state) => state.setSearch);
+  const search = useUser((state) => state.search);
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
@@ -53,7 +55,12 @@ const HomeScreen = () => {
         >
           <TextInput
             placeholder="Search for washers in your area"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#C4C4C4"
+            style={{
+              color: 'white'
+            }}
+            onChangeText={(text) => setSearch(text)}
+            value={search}
           />
           <Feather name="search" size={24} color="#C4C4C4" />
         </View>
@@ -96,7 +103,7 @@ const HomeScreen = () => {
               },
               pressed
                 ? {
-                    backgroundColor: colors.accent
+                    backgroundColor: colors.action
                   }
                 : {}
             ]}

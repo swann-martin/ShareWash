@@ -9,13 +9,14 @@ import {
 import React from 'react';
 import { colors } from '../config/constant';
 import { useNavigation } from '@react-navigation/native';
-import { useLaundry, washerSelectedState } from '../store/store';
+import { useLaundry, useUser, washerSelectedState } from '../store/store';
 
 const WashersNearByComponent = () => {
   const navigation = useNavigation();
 
   const washerSelected = useLaundry((state) => state.washerSelected);
   const setWasherSelected = useLaundry((state) => state.setWasherSelected);
+  const search = useUser((state) => state.search);
 
   const washersNearby = [
     {
@@ -47,6 +48,10 @@ const WashersNearByComponent = () => {
       adress: '3.1'
     }
   ];
+
+  const filteredWashers = washersNearby.filter((washer) =>
+    search.length > 3 ? washer.title.includes(search) : washer
+  );
 
   const selectWasher = (person: washerSelectedState) => {
     !!washerSelected && washerSelected?.id === person.id
@@ -89,7 +94,7 @@ const WashersNearByComponent = () => {
     <View>
       <Text style={{ color: 'white' }}>Peers Available in your area</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {washersNearby.map((person) => (
+        {filteredWashers.map((person) => (
           <WasherCard
             key={person.id}
             person={person}

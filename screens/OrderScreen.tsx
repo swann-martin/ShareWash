@@ -4,8 +4,9 @@ import {
   View,
   Image,
   Pressable,
-  Platform,
-  Button
+  Modal,
+  Alert,
+  TouchableOpacity
 } from 'react-native';
 import React, { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -21,6 +22,8 @@ const OrderScreen = () => {
   const [total, setTotal] = React.useState(0);
   const addToCart = useLaundry((state) => state.addToCart);
   const removeFromCart = useLaundry((state) => state.removeFromCart);
+  const resetAll = useLaundry((state) => state.resetAll);
+  const [modalVisible, setModalVisible] = useState(false);
 
   React.useEffect(() => {
     !!cart.length &&
@@ -43,7 +46,7 @@ const OrderScreen = () => {
   const [date, setDate] = useState(today);
   const [time, setTime] = useState('18h00');
 
-  const ButtonDate = ({ dateDisplayed }) => {
+  const ButtonDate = ({ dateDisplayed }: { dateDisplayed: Date }) => {
     return (
       <Pressable
         onPress={() => {
@@ -66,7 +69,7 @@ const OrderScreen = () => {
     );
   };
 
-  const ButtonTime = ({ timeDisplayed }) => {
+  const ButtonTime = ({ timeDisplayed }: { timeDisplayed: string }) => {
     return (
       <Pressable
         onPress={() => {
@@ -82,8 +85,52 @@ const OrderScreen = () => {
     );
   };
 
+  const ThankYouModal = () => (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.');
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>Thank you for your order !</Text>
+          <Text style={styles.modalText}>
+            Once {washerSelected?.title} has confirmed your order, you will
+            receive an email with the practical details for payment and
+            delivery.
+          </Text>
+          <Pressable
+            style={[
+              {
+                padding: 10,
+                height: 50,
+                borderRadius: 8,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: colors.action
+              }
+            ]}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+              resetAll();
+              navigation.navigate('Home' as never);
+            }}
+          >
+            <Text style={styles.textStyle}>Close</Text>
+          </Pressable>
+        </View>
+      </View>
+    </Modal>
+  );
+
   return (
     <View style={styles.container}>
+      <ThankYouModal />
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         {/* washer  */}
         <View>
@@ -211,41 +258,63 @@ const OrderScreen = () => {
         <ButtonTime timeDisplayed={'19h30'} />
       </View>
 
-      <Pressable
-        onPress={() => {
-          const order = {
-            washer: washerSelected,
-            services: servicesSelected,
-            clothes: cart,
-            date: date,
-            time: time,
-            total: total
-          };
-          console.log(order);
+      <View
+        style={{
+          flexDirection: 'row',
+          marginTop: 40,
+          justifyContent: 'space-evenly'
         }}
-        style={(pressed) => [
-          {
-            marginTop: 40,
-            marginBottom: 80,
+      >
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={{
+            height: 50,
+            padding: 10,
+            borderRadius: 8,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors.red
+          }}
+        >
+          <Text
+            style={{ color: colors.white, fontSize: 18, fontWeight: 'bold' }}
+          >
+            Cancel
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            const order = {
+              washer: washerSelected,
+              services: servicesSelected,
+              clothes: cart,
+              date: date,
+              time: time,
+              total: total
+            };
+            console.log(order);
+            setModalVisible(true);
+          }}
+          style={{
+            padding: 10,
             height: 50,
             borderRadius: 8,
             flexDirection: 'row',
             justifyContent: 'center',
-            alignItems: 'center'
-          },
-          pressed
-            ? {
-                backgroundColor: colors.action
-              }
-            : {
-                backgroundColor: colors.red
-              }
-        ]}
-      >
-        <Text style={{ color: colors.white, fontSize: 18, fontWeight: 'bold' }}>
-          Confirm Order
-        </Text>
-      </Pressable>
+            alignItems: 'center',
+            backgroundColor: colors.action
+          }}
+        >
+          <Text
+            style={{ color: colors.white, fontSize: 18, fontWeight: 'bold' }}
+          >
+            Confirm Order
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -299,5 +368,37 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     padding: 10
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center'
   }
 });

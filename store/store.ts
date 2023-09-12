@@ -10,6 +10,7 @@ export interface LaundryState {
   setWasherSelected: (washerSelected: washerSelectedState | null) => void;
   servicesSelected: string[];
   setServicesSelected: (service: string) => void;
+  resetAll: () => void;
 }
 
 export interface clothesState {
@@ -24,6 +25,8 @@ export interface clothesState {
 export interface UserState {
   user: User | null;
   setUser: (user: User) => void;
+  search: string;
+  setSearch: (search: string) => void;
   displayCurrentAdress: string | null;
   setDisplayCurrentAdress: (displayCurrentAdress: string | null) => void;
 }
@@ -41,7 +44,6 @@ export const useLaundry = create<LaundryState>((set) => ({
   setWasherSelected: (washerSelected: washerSelectedState | null) =>
     set({ washerSelected }),
   servicesSelected: [],
-
   cart: [],
   addToCart: (item: clothesState) =>
     set((state) => {
@@ -118,12 +120,16 @@ export const useLaundry = create<LaundryState>((set) => ({
         ...state,
         servicesSelected: updatedServices
       };
-    })
+    }),
+
+  resetAll: () => set({ washerSelected: null, cart: [], servicesSelected: [] })
 }));
 
 export const useUser = create<UserState>((set) => ({
   user: null,
   setUser: (user: User) => set({ user }),
+  search: '',
+  setSearch: (search: string) => set({ search }),
   displayCurrentAdress: 'no location at the moment',
   setDisplayCurrentAdress: (displayCurrentAdress: string | null) =>
     set({ displayCurrentAdress })
